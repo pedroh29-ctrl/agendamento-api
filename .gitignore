@@ -1,0 +1,21 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### IDE ###
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+### Logs ###
+*.log
+build-log.txt
+
+### Banco H2 em arquivo (perfil file) ###
+data/
+*.mv.db
+*.trace.db
