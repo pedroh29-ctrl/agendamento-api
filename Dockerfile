@@ -28,5 +28,7 @@ COPY --from=build /app/target/*.jar app.jar
 # A aplicação lê a porta da variável de ambiente PORT (injetada pelo Render).
 EXPOSE 8080
 
-# Inicia a aplicação.
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Inicia a aplicação já com o perfil "prod" ativo (PostgreSQL).
+# Fixar aqui garante que o deploy nunca caia no H2 por engano, mesmo que
+# a variável de ambiente SPRING_PROFILES_ACTIVE não esteja definida.
+ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
