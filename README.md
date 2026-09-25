@@ -20,6 +20,9 @@ Use a **aplicação web** para criar sua conta, cadastrar clientes e serviços e
 
 ## ✨ Destaques
 
+- **Agendamento público (self-service)** — o próprio cliente marca o horário, sem login: escolhe o profissional, o serviço, vê os **horários disponíveis** e confirma. Estilo Calendly/Booksy.
+- **Cálculo de horários livres** — a API gera os horários disponíveis a partir do expediente do profissional e da duração do serviço, removendo os já ocupados.
+- **Pagamento via Pix** — o profissional cadastra sua chave Pix e ela é exibida ao cliente na confirmação do agendamento.
 - **Multi-freelancer com isolamento de dados** — cada profissional só enxerga a própria agenda, clientes e serviços. Um nunca acessa os dados do outro.
 - **Autenticação** via Spring Security (HTTP Basic), com senhas em hash BCrypt.
 - **Regras de negócio reais** — conflito de horário, validação de expediente, agendamento no passado, máquina de estados de status.
@@ -92,6 +95,22 @@ CRUD completo (`POST`, `GET`, `GET /{id}`, `PUT /{id}`, `DELETE /{id}`), sempre 
 | PATCH  | `/agendamentos/{id}/reagendar`          | Mover para novo horário          |
 | PATCH  | `/agendamentos/{id}/status`             | Confirmar / concluir / cancelar  |
 | DELETE | `/agendamentos/{id}`                    | Excluir                          |
+
+### Público (sem login) — `/publico`
+Endpoints usados pela página onde o próprio cliente marca o horário.
+
+| Método | Rota                                                        | Descrição                                   |
+|--------|-------------------------------------------------------------|---------------------------------------------|
+| GET    | `/publico/profissionais`                                    | Lista os profissionais disponíveis          |
+| GET    | `/publico/profissionais/{id}/servicos`                      | Lista os serviços de um profissional        |
+| GET    | `/publico/horarios?profissionalId&servicoId&data`           | Horários livres em uma data                 |
+| POST   | `/publico/agendamentos`                                     | Cliente marca o horário (retorna valor + Pix) |
+
+### Perfil — `/profissionais/eu`
+| Método | Rota                | Descrição                                      |
+|--------|---------------------|------------------------------------------------|
+| GET    | `/profissionais/eu` | Dados do profissional autenticado              |
+| PUT    | `/profissionais/eu` | Atualiza nome, profissão e **chave Pix**       |
 
 ## ▶️ Como rodar localmente
 
