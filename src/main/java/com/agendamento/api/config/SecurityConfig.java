@@ -50,6 +50,9 @@ public class SecurityConfig {
                         // Registro de novo profissional — público (é como se cria a conta)
                         .requestMatchers(HttpMethod.POST, "/profissionais/registrar").permitAll()
 
+                        // Fluxo público de agendamento (cliente marca sem login)
+                        .requestMatchers("/publico/**").permitAll()
+
                         // Todo o resto exige um profissional autenticado.
                         // Não há mais leitura pública: a agenda de cada um é privada.
                         .anyRequest().authenticated())

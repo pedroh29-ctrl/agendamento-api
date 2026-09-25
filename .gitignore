@@ -11,9 +11,9 @@ target/
 .project
 .classpath
 
-### Logs ###
+### Logs e arquivos temporarios ###
 *.log
-build-log.txt
+*.txt
 
 ### Banco H2 em arquivo (perfil file) ###
 data/
