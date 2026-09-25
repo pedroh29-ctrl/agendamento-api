@@ -10,6 +10,11 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 // @Configuration: esta classe define beans de configuração
 // @EnableWebSecurity: ativa o controle de segurança do Spring
@@ -25,6 +30,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // Habilita CORS (usa o bean corsConfigurationSource abaixo).
+                // Sem isto, o navegador bloqueia as chamadas vindas do frontend.
+                .cors(Customizer.withDefaults())
+
                 // Desabilita CSRF para facilitar testes via Swagger/Postman
                 .csrf(AbstractHttpConfigurer::disable)
 
@@ -52,6 +61,28 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
 
         return http.build();
+    }
+
+    // -----------------------------------------------------------------------
+    // Configuração de CORS: define de quais origens (sites) o navegador pode
+    // chamar esta API. O frontend roda em outro endereço, então precisa estar
+    // liberado aqui.
+    //
+    // Usamos allowedOriginPatterns com "*" para aceitar qualquer origem
+    // (prático para um projeto de portfólio/demo). Em um sistema real e
+    // sensível, o ideal é restringir à(s) URL(s) específica(s) do frontend.
+    // -----------------------------------------------------------------------
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOriginPatterns(List.of("*"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 
     // BCrypt é o algoritmo de hash recomendado para senhas
