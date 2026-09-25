@@ -10,11 +10,11 @@
 
 ## 🚀 Demo ao vivo
 
-A API está publicada e rodando na nuvem:
+**🖥️ Aplicação web (interface):** https://pedroh29-ctrl.github.io/agendamento-web/
+**⚙️ API (Swagger):** https://agendamento-api-i14n.onrender.com/swagger-ui.html
+**💻 Código do frontend:** https://github.com/pedroh29-ctrl/agendamento-web
 
-**➡️ https://agendamento-api-i14n.onrender.com/swagger-ui.html**
-
-Abra o link, registre um profissional em `POST /profissionais/registrar`, clique em **Authorize** com o e-mail e senha criados, e teste todos os endpoints direto pelo navegador.
+Use a **aplicação web** para criar sua conta, cadastrar clientes e serviços e montar a agenda pelo navegador — sem escrever nenhum comando. Ou explore a **API** direto pelo Swagger.
 
 > Hospedada no plano gratuito do Render: no primeiro acesso após um período ocioso, pode levar ~30s para "acordar".
 
