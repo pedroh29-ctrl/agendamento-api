@@ -11,6 +11,7 @@ public class ProfissionalResponse {
     private String nome;
     private String email;
     private String profissao;
+    private String chavePix;
     private LocalDateTime criadoEm;
 
     public ProfissionalResponse(Profissional p) {
@@ -18,6 +19,7 @@ public class ProfissionalResponse {
         this.nome = p.getNome();
         this.email = p.getEmail();
         this.profissao = p.getProfissao();
+        this.chavePix = p.getChavePix();
         this.criadoEm = p.getCriadoEm();
     }
 
@@ -35,6 +37,10 @@ public class ProfissionalResponse {
 
     public String getProfissao() {
         return profissao;
+    }
+
+    public String getChavePix() {
+        return chavePix;
     }
 
     public LocalDateTime getCriadoEm() {

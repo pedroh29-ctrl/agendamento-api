@@ -40,6 +40,11 @@ public class Profissional {
     @Column
     private String profissao;
 
+    // Chave Pix do profissional, mostrada ao cliente na confirmação do
+    // agendamento para ele efetuar o pagamento. Opcional.
+    @Column
+    private String chavePix;
+
     @Column(nullable = false, updatable = false)
     private LocalDateTime criadoEm;
 
@@ -91,6 +96,14 @@ public class Profissional {
 
     public void setProfissao(String profissao) {
         this.profissao = profissao;
+    }
+
+    public String getChavePix() {
+        return chavePix;
+    }
+
+    public void setChavePix(String chavePix) {
+        this.chavePix = chavePix;
     }
 
     public LocalDateTime getCriadoEm() {

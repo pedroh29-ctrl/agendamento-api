@@ -1,5 +1,6 @@
 package com.agendamento.api.controller;
 
+import com.agendamento.api.dto.AtualizarPerfilRequest;
 import com.agendamento.api.dto.ProfissionalResponse;
 import com.agendamento.api.dto.RegistroProfissionalRequest;
 import com.agendamento.api.model.Profissional;
@@ -21,18 +22,17 @@ public class ProfissionalController {
     private final ProfissionalAtualService profissionalAtualService;
 
     public ProfissionalController(ProfissionalService profissionalService,
-                                  ProfissionalAtualService profissionalAtualService) {
+            ProfissionalAtualService profissionalAtualService) {
         this.profissionalService = profissionalService;
         this.profissionalAtualService = profissionalAtualService;
     }
 
     // -----------------------------------------------------------------------
-    // POST /profissionais/registrar  (público)
+    // POST /profissionais/registrar (público)
     // Cria a conta do profissional. Depois disso, use o e-mail e a senha no
     // HTTP Basic para acessar os demais endpoints.
     // -----------------------------------------------------------------------
-    @Operation(summary = "Registrar profissional",
-            description = "Cria uma nova conta de freelancer (endpoint público)")
+    @Operation(summary = "Registrar profissional", description = "Cria uma nova conta de freelancer (endpoint público)")
     @PostMapping("/registrar")
     public ResponseEntity<ProfissionalResponse> registrar(
             @Valid @RequestBody RegistroProfissionalRequest req) {
@@ -49,5 +49,17 @@ public class ProfissionalController {
     public ResponseEntity<ProfissionalResponse> eu() {
         Profissional atual = profissionalAtualService.obter();
         return ResponseEntity.ok(new ProfissionalResponse(atual));
+    }
+
+    // -----------------------------------------------------------------------
+    // PUT /profissionais/eu
+    // Atualiza o perfil do profissional logado (nome, profissão e chave Pix).
+    // -----------------------------------------------------------------------
+    @Operation(summary = "Atualizar meu perfil", description = "Atualiza nome, profissão e chave Pix do profissional autenticado")
+    @PutMapping("/eu")
+    public ResponseEntity<ProfissionalResponse> atualizar(
+            @Valid @RequestBody AtualizarPerfilRequest req) {
+        Profissional atualizado = profissionalService.atualizarPerfil(req);
+        return ResponseEntity.ok(new ProfissionalResponse(atualizado));
     }
 }
